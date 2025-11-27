@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Graduation Wish for My Friend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(to right, #f3f6fb, #ded6fe, #f7fafc);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+    .confetti {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .container {
+      max-width: 430px;
+      width: 100%;
+      margin: 24px;
+      background: white;
+      padding: 38px 28px 38px 28px;
+      border-radius: 18px;
+      box-shadow: 0 4px 22px rgba(80,73,160,0.16);
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      border: 2px solid #ffce63;
+    }
+    /* Animated Cap Styles */
+    .cap-anim {
+      width: 110px;
+      display: block;
+      margin: 15px auto 22px auto;
+      transform-origin: 60% 70%;
+      animation: capToss 1.6s cubic-bezier(.45,1.5,.45,1) 0s;
+    }
+    @keyframes capToss {
+      0%   { transform: translateY(0) rotate(0deg);}
+      25%  { transform: translateY(-50px) rotate(-20deg);}
+      62%  { transform: translateY(-110px) rotate(18deg);}
+      80%  { transform: translateY(-50px) rotate(-9deg);}
+      100% { transform: translateY(0) rotate(0deg);}
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #673ab7;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+    .divider {
+      width: 120px;
+      height: 5px;
+      background: linear-gradient(to right, #ffce63, #ffd900, #feeccf);
+      border-radius: 100px;
+      margin: 20px auto 30px auto;
+    }
+    p {
+      font-size: 1.17rem;
+      line-height: 1.7;
+      color: #222f3e;
+      margin-bottom: 28px;
+      padding: 0 10px;
+    }
+    .signature {
+      font-style: italic;
+      color: #986fc7;
+      margin-top: 28px;
+      font-size: 1.12rem;
+      letter-spacing: 0.5px;
+    }
+    .btn-share {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 10px 38px;
+      background: linear-gradient(120deg, #ffce63 70%, #fff79f 100%);
+      color: #673ab7;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(255,206,99,0.13);
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .btn-share:hover {
+      background: linear-gradient(120deg, #ffd900 70%, #ffeebc 100%);
+      box-shadow: 0 4px 12px rgba(255,206,99,0.25);
+    }
+    @media (max-width: 560px) {
+      .container {
+        padding: 24px 9px 24px 9px;
+      }
+      h1 {
+        font-size: 1.55rem;
+      }
+      .divider {
+        width: 60px;
+        height: 3px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Confetti Effect (CSS-only, animated) -->
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+
+  <div class="container">
+    <!-- Animated Graduation Cap SVG -->
+    <svg class="cap-anim" viewBox="0 0 84 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <polygon points="42,5 80,24 42,44 4,24" fill="#333" stroke="#222" stroke-width="2"/>
+        <rect x="30" y="44" width="24" height="13" rx="6.5" fill="#755ecb" stroke="#473f6f" stroke-width="2"/>
+        <circle cx="42" cy="57" r="3.5" fill="#ffce63" stroke="#ffd900" stroke-width="1.6"/>
+        <rect x="41" y="17" width="2" height="26" fill="#ffce63" />
+      </g>
+    </svg>
+    <h1>Congratulations, <span id="friendname">[Friend's Name]</span>!</h1>
+    <div class="divider"></div>
+    <p>
+      Your hard work, perseverance, and passion have brought you to this proud moment.<br>
+      <br>
+      I’m so proud of everything you’ve achieved and excited for all that’s ahead.<br>
+      May your future be filled with endless opportunities, success, and happiness.<br>
+      <br>
+      Remember, this is just the beginning—keep chasing your dreams and making us all proud.<br>
+      <br>
+      Cheers to your bright future!
+    </p>
+    <div class="signature">
+      With pride, <strong>[Your Name]</strong>
+    </div>
+    <button class="btn-share" title="(Just for show!)">🎉 Share</button>
+  </div>
+
+  <script>
+  // Minimal confetti animation (vanilla JS)
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  let confetti = [];
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function randomColor() {
+    const colors = ["#ffce63","#ffd900","#986fc7","#fedb30","#fb408b","#53dabb"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  for(let i=0;i<44;i++){
+    confetti.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height - canvas.height,
+      r: Math.random()*9+4,
+      d: Math.random()*canvas.height,
+      color: randomColor(),
+      tilt: Math.random()*18
+    });
+  }
+  function drawConfetti() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confetti.forEach(c=>{
+      ctx.beginPath();
+      ctx.arc(c.x,c.y,c.r,0,2*Math.PI);
+      ctx.fillStyle=c.color;
+      ctx.globalAlpha=0.85;
+      ctx.fill();
+      ctx.globalAlpha=1;
+    });
+    updateConfetti();
+  }
+  function updateConfetti() {
+    confetti.forEach(c=>{
+      c.y += 1.7 + Math.random()*1.7;
+      c.x += Math.sin(performance.now()/400 + c.tilt)*1.1;
+      if (c.y > canvas.height+18) {
+        c.y = -18;
+        c.x = Math.random()*canvas.width;
+      }
+    });
+  }
+  setInterval(drawConfetti,22);
+  </script>
+</body>
+</html>
